@@ -6,7 +6,7 @@ import MovieSearch from './components/MovieSearch';
 
 import configureStore from './redux/store';
 import Navbar from './components/Navbar';
-import '/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <Provider store={configureStore()}>
