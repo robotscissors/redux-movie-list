@@ -3,15 +3,11 @@ import { connect } from 'react-redux';
 
 import { getMovieList, removeMovieFromList } from './redux/actions/movieList.actions';
 
-let App = ({ movieList, getMovieList  }) => {
+let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
 
   useEffect(() => {
     getMovieList();
   }, [getMovieList])
-
-  const removeMovie = async (movie) => {
-    removeMovieFromList(movie);
-  }
 
   return (
     <div>
@@ -21,7 +17,7 @@ let App = ({ movieList, getMovieList  }) => {
           <div key={movie.imdbID}>
             <img src={movie.Poster} alt={`${movie.Title} poster`} />
             <h3>{ movie.Title }</h3>
-            <button onClick={() => removeMovie(movie)}>Remove From List</button>
+            <button onClick={() => removeMovieFromList(movie)}>Remove From List</button>
           </div>
         ))
       }
@@ -35,7 +31,7 @@ const mapStateToProps = state => ({
 
 App = connect(
   mapStateToProps,
-  { getMovieList }
+  { getMovieList, removeMovieFromList }
 )(App)
 
 export default App;
