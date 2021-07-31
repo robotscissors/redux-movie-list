@@ -71,7 +71,9 @@ let MovieSearch = ({ addMovieToList }) => {
               ))}
             </Row>
             <Row>
-              <Pagination searchResults={searchResults} currentPage={currentPage} setCurrentPage={goToPage} />
+              <Col>
+                <Pagination searchResults={searchResults} currentPage={currentPage} setCurrentPage={goToPage} />
+              </Col>
             </Row>
           </>
           : <Row>

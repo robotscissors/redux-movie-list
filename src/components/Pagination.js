@@ -11,13 +11,13 @@ export const Pagination = ({ searchResults, currentPage, setCurrentPage }) => {
   // Build pagination options
   const startingPages = pageCountArr.slice(0, 2);
 
-  const firstThreeDots = (currentPage > 3) ? [<span key="firstThreeDots">...</span>] : [];
+  const firstThreeDots = (currentPage > 3) ? [<BSPagination.Ellipsis disabled key="firstThreeDots" />] : [];
 
   const middlePages = (currentPage > 0) ? 
-    pageCountArr.slice(Math.max(currentPage - 1,2), Math.min(currentPage + 1,pageCount - 1)) 
+    pageCountArr.slice(Math.max(currentPage - 2,2), Math.min(currentPage + 1,pageCount - 2)) 
     : [];
 
-  const lastThreeDots = (currentPage < pageCount-2) ? [<span key="lastThreeDots">...</span>] : [];
+  const lastThreeDots = (currentPage < pageCount-2) ? [<BSPagination.Ellipsis disabled key="lastThreeDots" />] : [];
 
   const endingPages = pageCountArr.slice(-2);
 
@@ -43,16 +43,18 @@ export const Pagination = ({ searchResults, currentPage, setCurrentPage }) => {
   );
 
   return (
-    <div className="text-center">
+    <div>
       { (pageCount > 1) &&
-        <BSPagination>
-          <BSPagination.Prev key="previous" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>&lt;</BSPagination.Prev>
-          <BSPagination.Item disabled>Page {currentPage} of {pageCount}</BSPagination.Item>  
-          <BSPagination.Next key="next" disabled={currentPage === pageCount} onClick={() => setCurrentPage(currentPage + 1)}>&gt;</BSPagination.Next>
+        <BSPagination className="justify-content-center">
+          <BSPagination.First key="first" disabled={currentPage === 1} onClick={() => setCurrentPage(1)} />
+          <BSPagination.Prev key="previous" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)} />
+          <BSPagination.Item disabled>Page {currentPage} of {pageCount}</BSPagination.Item>
+          <BSPagination.Next key="next" disabled={currentPage === pageCount} onClick={() => setCurrentPage(currentPage + 1)} />
+          <BSPagination.Last key="last" disabled={currentPage === pageCount} onClick={() => setCurrentPage(pageCount)} />
         </BSPagination>
       }
       { (pageCount > 1) &&
-        <BSPagination>
+        <BSPagination className="justify-content-center">
           { pageCount > 7 ? limitedPageCount : buildPageList(pageCountArr) }
         </BSPagination>
       }
