@@ -32,15 +32,19 @@ let MovieSearch = ({ addMovieToList }) => {
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
               <Card className="h-100">
                 <Card.Img variant="top" src={movie.Poster} alt={`${movie.Title} poster`} />
-                <Card.Body>
+                <Card.Body className="pb-0">
                   <Card.Title>{ movie.Title }</Card.Title>
+                </Card.Body>
+                <Card.Footer className="bg-white border-0 pt-0 pb-3">
                   <Button
-                    variant="primary"
+                    variant="success"
                     onClick={() => addToMovieList(movie.imdbID)}
                   >
-                  <Button variant="primary" onClick={() => addToMovieList(movie.imdbID)}>Add To List</Button>
+                    <i class="bi bi-bookmark-plus"></i>&nbsp;
+                    Add To List
                   </Button>
-                </Card.Body>
+
+                </Card.Footer>
               </Card>
             </Col>
           ))

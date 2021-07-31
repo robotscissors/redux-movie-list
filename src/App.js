@@ -22,10 +22,18 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
               <Card className="h-100">
                 <Card.Img variant="top" src={movie.Poster} alt={`${movie.Title} poster`} />
-                <Card.Body>
+                <Card.Body className="pb-0">
                   <Card.Title>{ movie.Title }</Card.Title>
-                  <Button variant="primary" onClick={() => removeMovieFromList(movie)}>Remove From List</Button>
                 </Card.Body>
+                <Card.Footer className="bg-white border-0 pt-0 pb-3">
+                  <Button 
+                    variant="danger" 
+                    onClick={() => removeMovieFromList(movie)}
+                  >
+                    <i class="bi bi-bookmark-dash-fill"></i>&nbsp;
+                    Remove From List
+                  </Button>
+                </Card.Footer>
               </Card>
             </Col>
           ))
