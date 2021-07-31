@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { addMovieToList } from '../redux/actions/movieList.actions';
 import Pagination from './Pagination';
@@ -12,11 +12,26 @@ import Button from 'react-bootstrap/Button';
 
 let MovieSearch = ({ addMovieToList }) => {
   const movieApiService = new MovieApiService();
-  const [searchResults, setSearchResults] = useState(); 
+  const [ searchResults, setSearchResults ] = useState(); 
+  const [ title, setTitle ] = useState();
+  const [ currentPage, setCurrentPage ] = useState(1);
 
-  const onSearch = async (title) => {
-    const results = await movieApiService.getMoviesByTitle(title);
+  const runSearch = async () => {
+    const results = await movieApiService.getMoviesByTitle(title,currentPage);
     setSearchResults(results);
+  }
+
+  const onSearch = async () => {
+    if(title) {
+      setCurrentPage(1);
+      return await runSearch();
+    }
+    return [];
+  }
+
+  const goToPage = async (page) => {
+    setCurrentPage(page);
+    runSearch();
   }
 
   const addToMovieList = async (id) => {
@@ -26,7 +41,7 @@ let MovieSearch = ({ addMovieToList }) => {
 
   return (
     <Container>
-      <SearchBar onSearch={onSearch}/>
+      <SearchBar onSearch={onSearch} setTitle={setTitle} />
         { searchResults
           ? <>
             <Row>
@@ -56,7 +71,7 @@ let MovieSearch = ({ addMovieToList }) => {
               ))}
             </Row>
             <Row>
-              <Pagination searchResults={searchResults} currentPage={0} setCurrentPage={() => 0} />
+              <Pagination searchResults={searchResults} currentPage={currentPage} setCurrentPage={goToPage} />
             </Row>
           </>
           : <Row>

@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import BSPagination from 'react-bootstrap/Pagination';
 
 export const Pagination = ({ searchResults, currentPage, setCurrentPage }) => {
   // convert page count to array
@@ -24,13 +24,13 @@ export const Pagination = ({ searchResults, currentPage, setCurrentPage }) => {
   // Build pagination buttons
   const buildPageList = (arr) => {
     return arr.map(({count}) => (
-      <Button
+      <BSPagination.Item
         key={count}
         disabled={count === currentPage}
         onClick={() => setCurrentPage(count)}
       >
         {count}
-      </Button>
+      </BSPagination.Item>
     ))
   }
 
@@ -45,14 +45,16 @@ export const Pagination = ({ searchResults, currentPage, setCurrentPage }) => {
   return (
     <div className="text-center">
       { (pageCount > 1) &&
-        <div>
-          <Button key="previous" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>&lt;</Button>
-          <Button disabled>Page {currentPage} of {pageCount}</Button>  
-          <Button key="next" disabled={currentPage === pageCount} onClick={() => setCurrentPage(currentPage + 1)}>&gt;</Button>
-        </div>
+        <BSPagination>
+          <BSPagination.Prev key="previous" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>&lt;</BSPagination.Prev>
+          <BSPagination.Item disabled>Page {currentPage} of {pageCount}</BSPagination.Item>  
+          <BSPagination.Next key="next" disabled={currentPage === pageCount} onClick={() => setCurrentPage(currentPage + 1)}>&gt;</BSPagination.Next>
+        </BSPagination>
       }
       { (pageCount > 1) &&
-        ( pageCount > 7 ? limitedPageCount : buildPageList(pageCountArr) )
+        <BSPagination>
+          { pageCount > 7 ? limitedPageCount : buildPageList(pageCountArr) }
+        </BSPagination>
       }
     </div>
   )
