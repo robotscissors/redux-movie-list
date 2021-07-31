@@ -27,18 +27,27 @@ let MovieSearch = ({ addMovieToList }) => {
     <Container>
       <SearchBar onSearch={onSearch}/>
       <Row>
-        {
-          searchResults && searchResults.map((movie) => (
+        { searchResults 
+          ? searchResults.map((movie) => (
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
               <Card className="h-100">
                 <Card.Img variant="top" src={movie.Poster} alt={`${movie.Title} poster`} />
                 <Card.Body>
                   <Card.Title>{ movie.Title }</Card.Title>
+                  <Button
+                    variant="primary"
+                    onClick={() => addToMovieList(movie.imdbID)}
+                  >
                   <Button variant="primary" onClick={() => addToMovieList(movie.imdbID)}>Add To List</Button>
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
           ))
+          : <Col className="text-center">
+          <p className="text-secondary">Use the search bar above to begin</p>
+          <img src="/redux-movie-list/images/popcornPoster.jpg" alt="" style={{maxWidth:'300px'}} />
+        </Col>
         }
       </Row>
     </Container>
