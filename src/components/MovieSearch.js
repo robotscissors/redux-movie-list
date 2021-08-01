@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { addMovieToList } from '../redux/actions/movieList.actions';
-import Pagination from './Pagination';
 import MovieApiService from '../services/movieApi.service';
+import Pagination from './Pagination';
 import SearchBar from './SearchBar';
+import MovieCard from './MovieCard';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from  'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 let MovieSearch = ({ addMovieToList }) => {
@@ -15,6 +15,7 @@ let MovieSearch = ({ addMovieToList }) => {
   const [ searchResults, setSearchResults ] = useState(); 
   const [ title, setTitle ] = useState();
   const [ currentPage, setCurrentPage ] = useState(1);
+  const [ selectedMovie, setSelectedMovie ] = useState(null);
 
   const runSearch = async () => {
     const results = await movieApiService.getMoviesByTitle(title,currentPage);
@@ -39,34 +40,29 @@ let MovieSearch = ({ addMovieToList }) => {
     addMovieToList(result);
   }
 
+  const onClose = () => setSelectedMovie(null);
+
   return (
     <Container>
       <SearchBar onSearch={onSearch} setTitle={setTitle} />
         { searchResults
           ? <>
             <Row>
-              { searchResults.Search.map((movie) => (
+              { searchResults.Search.map((movie,index) => (
                 <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
-                  <Card className="h-100">
-                    <Card.Img
-                      variant="top"
-                      src={movie.Poster !== 'N/A' ? movie.Poster : '/redux-movie-list/images/popcornPoster.jpg'}
-                      alt={`${movie.Title} poster`}
-                    />
-                    <Card.Body className="pb-0">
-                      <Card.Title>{ movie.Title }</Card.Title>
-                    </Card.Body>
-                    <Card.Footer className="bg-white border-0 pt-0 pb-3">
-                      <Button
-                        variant="success"
-                        onClick={() => addToMovieList(movie.imdbID)}
-                      >
+                  <MovieCard 
+                    movie={movie}
+                    onClose={onClose}
+                    selectedMovie={selectedMovie}
+                    setSelectedMovie={setSelectedMovie}
+                    key={index}
+                    buttons={
+                      <Button variant="success" onClick={() => addToMovieList(movie.imdbID)}>
                         <i className="bi bi-bookmark-plus"></i>&nbsp;
                         Add To List
                       </Button>
-
-                    </Card.Footer>
-                  </Card>
+                    }
+                  />
                 </Col>
               ))}
             </Row>
