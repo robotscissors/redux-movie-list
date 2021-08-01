@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { addMovieToList } from '../redux/actions/movieList.actions';
+import { getMovieList, addMovieToList } from '../redux/actions/movieList.actions';
 import MovieApiService from '../services/movieApi.service';
 import Pagination from './navigation/Pagination';
 import SearchBar from './navigation/SearchBar';
@@ -10,12 +10,16 @@ import Row from 'react-bootstrap/Row';
 import Col from  'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-let MovieSearch = ({ addMovieToList }) => {
+let MovieSearch = ({ movieList, getMovieList, addMovieToList }) => {
   const movieApiService = new MovieApiService();
   const [ searchResults, setSearchResults ] = useState(); 
   const [ title, setTitle ] = useState();
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ selectedMovie, setSelectedMovie ] = useState(null);
+
+  useEffect(() => {
+    getMovieList();
+  }, [getMovieList]);
 
   const runSearch = async () => {
     const results = await movieApiService.getMoviesByTitle(title,currentPage);
@@ -52,6 +56,7 @@ let MovieSearch = ({ addMovieToList }) => {
                 <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
                   <MovieCard 
                     movie={movie}
+                    movieList={movieList}
                     onClose={onClose}
                     selectedMovie={selectedMovie}
                     setSelectedMovie={setSelectedMovie}
@@ -83,9 +88,13 @@ let MovieSearch = ({ addMovieToList }) => {
   )
 }
 
+const mapStateToProps = state => ({
+  movieList: state.movieListReducer,
+});
+
 MovieSearch = connect(
-  null,
-  { addMovieToList }
+  mapStateToProps,
+  { getMovieList, addMovieToList }
 )(MovieSearch)
 
 export default MovieSearch;
