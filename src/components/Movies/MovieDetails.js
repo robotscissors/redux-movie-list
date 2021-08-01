@@ -20,6 +20,7 @@ const MovieDetails = ({ imdbID }) => {
           variant="top"
           src={movie.Poster !== 'N/A' ? movie.Poster : '/redux-movie-list/images/popcornPoster.jpg'}
           alt={`${movie.Title} poster`}
+          style={{width:'100%'}}
         />
         {(movie.Poster === 'N/A') ? <span className="text-secondary">No poster avaialble</span> : null }
       </div>
