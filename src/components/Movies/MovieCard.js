@@ -2,10 +2,10 @@ import MovieDetails from './MovieDetails';
 import Modal from '../Modal';
 import Card from 'react-bootstrap/Card';
 
-const ShowCard = ({ movie, buttons, onClose, selectedMovie, setSelectedMovie }) => {
+const MovieCard = ({ movie, buttons, onClose, selectedMovie, setSelectedMovie }) => {
 
   return (
-    <div>
+    <div className="h-100">
       <Card className="h-100">
         <Card.Img
           variant="top"
@@ -32,4 +32,4 @@ const ShowCard = ({ movie, buttons, onClose, selectedMovie, setSelectedMovie }) 
   )
 }
 
-export default ShowCard;
+export default MovieCard;
