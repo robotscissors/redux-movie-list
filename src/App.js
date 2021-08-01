@@ -15,10 +15,9 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
 
   return (
     <Container>
-      <h1>My Movie List</h1>
       <Row>
-        {
-          movieList && movieList.list && movieList.list.map((movie) => (
+        { movieList
+          ? movieList.list.map((movie) => (
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
               <Card className="h-100">
                 <Card.Img
@@ -41,6 +40,15 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
               </Card>
             </Col>
           ))
+          : <Row>
+              <Col className="text-center">
+                <p className="text-secondary">
+                  You haven't added any movies yet. <br />
+                  First <a href="/redux-movie-list/">searh for a movie</a>, then click "Add To List".
+                </p>
+                <img src="/redux-movie-list/images/popcornPoster.jpg" alt="" style={{maxWidth:'300px'}} />
+              </Col>
+            </Row>
         }
       </Row>
     </Container>
