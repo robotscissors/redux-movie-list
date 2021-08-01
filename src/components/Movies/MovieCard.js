@@ -1,5 +1,5 @@
 import MovieDetails from './MovieDetails';
-import Modal from './Modal';
+import Modal from '../Modal';
 import Card from 'react-bootstrap/Card';
 
 const ShowCard = ({ movie, buttons, onClose, selectedMovie, setSelectedMovie }) => {

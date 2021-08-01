@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MovieApiService from '../services/movieApi.service';
+import MovieApiService from '../../services/movieApi.service';
 
 const MovieDetails = ({ imdbID }) => {
   const [ movie, setMovie ] = useState();

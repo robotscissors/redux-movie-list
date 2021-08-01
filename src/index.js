@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import App from './App';
-import MovieSearch from './components/MovieSearch';
+import MovieList from './components/MovieList';
+import MovieSearchResults from './components/MovieSearchResults';
 
 import configureStore from './redux/store';
-import Navbar from './components/Navbar';
+import Navbar from './components/navigation/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
@@ -14,8 +14,8 @@ ReactDOM.render(
     <Router>
       <Navbar/> 
       <Switch>
-        <Route exact path="/redux-movie-list/" component={MovieSearch} />
-        <Route exact path="/redux-movie-list/movie-list" component={App} />
+        <Route exact path="/redux-movie-list/" component={MovieSearchResults} />
+        <Route exact path="/redux-movie-list/movie-list" component={MovieList} />
       </Switch>
     </Router>
   </Provider>,
