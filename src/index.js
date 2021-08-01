@@ -14,7 +14,7 @@ ReactDOM.render(
     <Router>
       <Navbar/> 
       <Switch>
-        <Route exact path="/redux-movie-list/" component={MovieSearchResults} />
+        <Route exact path="/redux-movie-list" component={MovieSearchResults} />
         <Route exact path="/redux-movie-list/movie-list" component={MovieList} />
       </Switch>
     </Router>
