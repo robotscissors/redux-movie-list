@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import { addMovieToList } from '../redux/actions/movieList.actions';
 import Pagination from './Pagination';
