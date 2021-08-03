@@ -15,12 +15,14 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
   }, [getMovieList]);
 
   const onClose = () => setSelectedMovie(null);
+  console.log('moveList.js',movieList);
 
   return (
     <Container>
+      { console.log('movie list container',movieList)}
       <Row>
         { movieList
-          ? movieList.list.map((movie,index) => (
+          ? movieList.map((movie,index) => (
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
               <MovieCard 
                 movie={movie}

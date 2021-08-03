@@ -52,7 +52,7 @@ let MovieSearch = ({ movieList, getMovieList, addMovieToList }) => {
         { searchResults
           ? <>
             <Row>
-              { searchResults.Search.map((movie,index) => (
+              { searchResults.Search.map((movie,index,movieList) => (
                 <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
                   <MovieCard 
                     movie={movie}
@@ -61,11 +61,17 @@ let MovieSearch = ({ movieList, getMovieList, addMovieToList }) => {
                     selectedMovie={selectedMovie}
                     setSelectedMovie={setSelectedMovie}
                     key={index}
-                    buttons={
-                      <Button variant="success" onClick={() => addToMovieList(movie.imdbID)}>
-                        <i className="bi bi-bookmark-plus"></i>&nbsp;
-                        Add To List
-                      </Button>
+                    buttons={movieList.list?.indexOf(movie.imdbID)
+                      ?
+                        <Button variant="primary">
+                          <i className="bi bi-bookmark-plus"></i>&nbsp;
+                          In Movie List
+                        </Button>
+                      :
+                        <Button variant="success" onClick={() => addToMovieList(movie.imdbID)}>
+                          <i className="bi bi-bookmark-plus"></i>&nbsp;
+                          Add To List
+                        </Button>
                     }
                   />
                 </Col>
