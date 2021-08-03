@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
       <RBNavbar bg="light" fixed="top" expand="sm">
         <Container>
-          <RBNavbar.Brand as={Link} href="/">
+          <RBNavbar.Brand as={Link} to="/">
             <img
               src="/redux-movie-list/logo192.png"
               width="30"
