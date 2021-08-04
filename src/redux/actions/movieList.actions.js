@@ -1,3 +1,5 @@
-export const getMovieList = (payload = 'list') => ( { type: 'GET_MOVIE_LIST', payload: payload } );
-export const addMovieToList = (payload) => ( { type: 'ADD_MOVIE_TO_LIST', payload: payload } );
-export const removeMovieFromList = (movie, list = 'list') => ( { type: 'REMOVE_MOVIE_FROM_LIST', movie, list } );
+export const getMovieList = (payload) => ( { type: 'GET_MOVIE_LIST', payload: payload } );
+export const getAllMovieLists = () =>  ( { type: 'GET_ALL_MOVIE_LISTS'} );
+export const addMovieToList = (id, movie) => ( { type: 'ADD_MOVIE_TO_LIST', id, movie } );
+export const removeMovieFromList = (id, movie) => ( { type: 'REMOVE_MOVIE_FROM_LIST', id, movie } );
+export const createANewList = (name, movie) => ( { type: 'CREATE_A_NEW_LIST', name, movie } );

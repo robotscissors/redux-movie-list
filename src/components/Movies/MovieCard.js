@@ -20,12 +20,13 @@ const MovieCard = ({ movie, buttons, onClose, selectedMovie, setSelectedMovie })
           { buttons }
         </Card.Footer>
       </Card>
+
       { selectedMovie === movie.imdbID &&
         <Modal
           title={movie.Title}
           onClose={onClose}
           buttons={buttons}
-          children={ <MovieDetails imdbID={selectedMovie} /> } 
+          children={ <MovieDetails imdbID={selectedMovie} /> }
         />
       }
     </div>

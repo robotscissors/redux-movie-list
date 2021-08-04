@@ -2,7 +2,7 @@ import React from 'react';
 
 const Modal = ({ onClose, children, buttons }) => {
   let modalWrapper;
-  
+
   setTimeout(() => {
     modalWrapper = document.getElementById('exampleModal');
     modalWrapper.classList.add('show');

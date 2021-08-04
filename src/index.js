@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import MovieList from './components/MovieList';
+import MovieLists from './components/MovieList';
 import MovieSearchResults from './components/MovieSearchResults';
 
 import configureStore from './redux/store';
@@ -12,10 +12,10 @@ import './index.css';
 ReactDOM.render(
   <Provider store={configureStore()}>
     <HashRouter>
-      <Navbar/> 
+      <Navbar/>
       <Switch>
         <Route exact path="/" component={MovieSearchResults} />
-        <Route path="/movie-list" component={MovieList} />
+        <Route path="/movie-list" component={MovieLists} />
       </Switch>
     </HashRouter>
   </Provider>,

@@ -3,47 +3,88 @@ const initialState = null;
 const movieListReducer = (state = initialState, action) => {
     switch(action.type) {
         case 'GET_MOVIE_LIST': {
-            let movieList = localStorage.getItem('movieList');
+            let movieLists = localStorage.getItem('movieLists'); // an array
 
-            if(movieList) {
-              return JSON.parse(movieList)[action.payload]
-            } else {
-              return null;
-            }
+            return JSON.parse(movieLists);
+            // return listCheck(movieLists, action.payload)
+            //   ? getListById(movieLists, action.payload)
+            //   : null;
+
+
+            // if(movieList) {
+            //   return JSON.parse(movieList)
+            // } else {
+            //   return null;
+            // }
+        }
+        case 'GET_ALL_MOVIE_LISTS': {
+          let movieLists = localStorage.getItem('movieLists'); // an
+          return movieLists ? JSON.parse(movieLists) : state
         }
         case 'ADD_MOVIE_TO_LIST': {
-          let movieList = localStorage.getItem('movieList');
-          if (movieList) {
-            movieList = JSON.parse(movieList);
-            movieList.list.push(action.payload);
-          } else {
-            movieList = { list: [ action.payload ]}
-          }
+          let movieLists = JSON.parse(localStorage.getItem('movieLists')); // an array
+          let movieList = getListById(movieLists, action.id)
+          movieList.list.push(action.movie)
 
-          localStorage.setItem('movieList', JSON.stringify(movieList));
+          const index = movieLists.findIndex(group => group.id === action.id);
+          movieLists[index] = movieList;
 
-          return movieList;
+          localStorage.setItem('movieLists', JSON.stringify(movieLists));
+
+          return movieLists;
         }
         case 'REMOVE_MOVIE_FROM_LIST': {
-          console.log(action.movie, action.list);
-          let movieList = localStorage.getItem('movieList');
-          movieList = JSON.parse(movieList);
-          const updatedList = movieList[action.list].filter((movieFromList) => movieFromList.imdbID !== action.movie.imdbID);
-          movieList[action.list] = updatedList;
-          if(movieList.length) {
-            localStorage.setItem('movieList', JSON.stringify(movieList));
+          let movieLists = localStorage.getItem('movieLists');
+          movieLists = JSON.parse(movieLists);
+
+          let group = getListById(movieLists, action.id)
+
+          const updatedList = group.list.filter((movieList) => movieList.imdbID !== action.movie.imdbID);
+          const index = movieLists.findIndex(movieLists => movieLists.id === action.id);
+
+          if (updatedList.length > 0 ){
+            movieLists[index].list = updatedList;
           } else {
-            movieList = null;
-            localStorage.removeItem('movieList');
+            movieLists.splice(index, 1); // remove list
           }
 
-          console.log('remove reducer',movieList);
+          localStorage.setItem('movieLists', JSON.stringify(movieLists));
 
-          return movieList ? movieList[action.list] : null;
+          return movieLists ? movieLists : null;
         }
+        case 'CREATE_A_NEW_LIST': {
+          let movieLists = localStorage.getItem('movieLists');
+          let movieList = {};
+          let listId = createListId();
+
+          movieLists = JSON.parse(movieLists);
+
+          if (!movieLists){
+            movieLists = []; // create an array
+          }
+
+          movieList = {
+            id: listId,
+            name: action.name,
+            list: [action.movie]
+          }
+
+          movieLists.push(movieList);
+          localStorage.setItem('movieLists', JSON.stringify(movieLists));
+
+          return movieLists;
+        }
+
         default:
             return state;
     }
 }
 
 export default movieListReducer;
+
+const getListById = (lists, listId) => lists.filter((list) => list.id === listId)[0];
+const listCheck   = (lists, listId) => !!getListById(lists, listId);
+
+const createListId = () => {
+    return Math.floor(Math.random() * 101);
+  }

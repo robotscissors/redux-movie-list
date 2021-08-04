@@ -15,16 +15,17 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
   }, [getMovieList]);
 
   const onClose = () => setSelectedMovie(null);
-  console.log('moveList.js',movieList);
 
   return (
     <Container>
-      { console.log('movie list container',movieList)}
       <Row>
+        {console.log("MovieList:", movieList)}
         { movieList
-          ? movieList.map((movie,index) => (
+          ? movieList.map((movieGroup) => (
+            movieGroup.list.map((movie, index) => (
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
-              <MovieCard 
+              <h4>{movieGroup.name}</h4>
+              <MovieCard
                 movie={movie}
                 movieList={movieList}
                 onClose={onClose}
@@ -32,9 +33,9 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
                 setSelectedMovie={setSelectedMovie}
                 key={index}
                 buttons={
-                  <Button 
-                    variant="danger" 
-                    onClick={() => removeMovieFromList(movie)}
+                  <Button
+                    variant="danger"
+                    onClick={() => removeMovieFromList(movieGroup.id, movie)}
                   >
                     <i className="bi bi-bookmark-dash-fill"></i>&nbsp;
                     Remove From List
@@ -42,6 +43,7 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
                 }
               />
             </Col>
+            ))
           ))
           : <Row>
               <Col className="text-center">
