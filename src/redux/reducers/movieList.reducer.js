@@ -22,6 +22,7 @@ const movieListReducer = (state = initialState, action) => {
           return movieLists ? JSON.parse(movieLists) : state
         }
         case 'ADD_MOVIE_TO_LIST': {
+          debugger;
           let movieLists = JSON.parse(localStorage.getItem('movieLists')); // an array
           let movieList = getListById(movieLists, action.id)
           movieList.list.push(action.movie)

@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route, useParams } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import MovieLists from './components/MovieList';
 import MovieSearchResults from './components/MovieSearchResults';
@@ -15,7 +15,7 @@ ReactDOM.render(
       <Navbar/>
       <Switch>
         <Route exact path="/" component={MovieSearchResults} />
-        <Route path="/movie-list" component={MovieLists} />
+        <Route path="/movie-list/:id" component={MovieLists} />
       </Switch>
     </HashRouter>
   </Provider>,

@@ -46,17 +46,20 @@ let CreateNewList = ({ movie, onListClose, createANewList, getAllMovieLists, add
           {prompt}
         </Row>
         <Row>
+        <Col style={{marginBottom:"1em"}}>
           { movieListNames.map((list, index) => (
-              <Col>
+
                 <Button
-                variant="success"
-                key={index}
-                onClick={() => selectThisList(list.id, movie)}
+                  variant="warning"
+                  key={index}
+                  onClick={() => selectThisList(list.id, movie)}
+                  style={{marginRight: "1em"}}
                 >
-                <i className="bi bi-bookmark-plus"></i>&nbsp;{list.name}
+                  <i class="bi bi-card-list"></i> {list.name}
                 </Button>
-              </Col>))
+              ))
           }
+        </Col>
         </Row>
         <Form inline onSubmit={onFormSubmit}>
           <Row>

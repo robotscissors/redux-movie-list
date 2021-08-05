@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getMovieList, removeMovieFromList } from '../redux/actions/movieList.actions';
 import MovieCard from './Movies/MovieCard';
@@ -10,6 +11,11 @@ import Button from 'react-bootstrap/Button';
 let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
   const [ selectedMovie, setSelectedMovie ] = useState(null);
 
+  let { id } = useParams();
+  console.log("ID:", id);
+  console.log("ALL MOVIES", movieList);
+  let newList = movieList.filter((group) => group.id === parseInt(id) );
+
   useEffect(() => {
     getMovieList();
   }, [getMovieList]);
@@ -19,9 +25,8 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
   return (
     <Container>
       <Row>
-        {console.log("MovieList:", movieList)}
-        { movieList
-          ? movieList.map((movieGroup) => (
+        { newList.length && id
+          ? newList.map((movieGroup) => (
             movieGroup.list.map((movie, index) => (
             <Col xs={12} md={6} lg={3} key={movie.imdbID} className="mb-4">
               <h4>{movieGroup.name}</h4>
@@ -49,7 +54,7 @@ let App = ({ movieList, getMovieList, removeMovieFromList  }) => {
               <Col className="text-center">
                 <p className="text-secondary">
                   You haven't added any movies yet. <br />
-                  First <a href="/redux-movie-list/">searh for a movie</a>, then click "Add To List".
+                  First <a href="/redux-movie-list/">search for a movie</a>, then click "Add To List".
                 </p>
                 <img src="/redux-movie-list/images/popcornPoster.jpg" alt="" style={{maxWidth:'300px'}} />
               </Col>

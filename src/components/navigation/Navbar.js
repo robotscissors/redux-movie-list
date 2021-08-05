@@ -6,10 +6,15 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import { getAllMovieLists } from '../../redux/actions/movieList.actions';
-
+import { useHistory } from 'react-router-dom';
 
 let Navbar = ({getAllMovieLists}) => {
-  const [movieLists, setMovieLists]  = useState(null);
+  const movieLists = JSON.parse(localStorage.getItem('movieLists'));
+
+  let history = useHistory();
+  const redirect = (id) => {
+    history.push('/movie-list/'+id);
+  }
 
   const options = (movieLists) => {
     if (Array.isArray(movieLists)){
@@ -17,7 +22,7 @@ let Navbar = ({getAllMovieLists}) => {
         <>
         { movieLists &&
           movieLists.map((movieGroup) => (
-            <NavDropdown.Item eventKey={movieGroup.id}>{movieGroup.name}</NavDropdown.Item>
+            <NavDropdown.Item eventKey={movieGroup.id} onClick={() => redirect(movieGroup.id)}>{movieGroup.name}</NavDropdown.Item>
           ))
         }
         </>
@@ -27,11 +32,6 @@ let Navbar = ({getAllMovieLists}) => {
     }
 
   }
-
-  useEffect(() => {
-    const lists = getAllMovieLists();
-    setMovieLists(lists);
-  }, []);
 
     return (
       <RBNavbar bg="light" fixed="top" expand="sm">
@@ -50,13 +50,13 @@ let Navbar = ({getAllMovieLists}) => {
           <RBNavbar.Collapse>
             <Nav>
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-              { Array.isArray(movieLists)
+              { Array.isArray(movieLists) && movieLists.length
                 ?
                   <NavDropdown title="Movie List" id="nav-dropdown">
                   { options(movieLists) }
                   </NavDropdown>
                 :
-                <Nav.Link as={Link} to="/movie-list">Movie List</Nav.Link>
+                null
               }
 
             </Nav>
